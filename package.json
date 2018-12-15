@@ -3,24 +3,22 @@
   "version": "1.0.0",
   "description": "This project provides the voice command functionality for the smart coffeemachine",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/JohnBra/smart-coffee-voice"
+    "type": "git",
+    "url": "https://github.com/JohnBra/smart-coffee-voice"
   },
   "main": "index.js",
   "scripts": {
-    "watch": "webpack --watch",
-    "build": "webpack --config webpack.config.js"
+    "start": "node ./src/index.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-preset-env": "^1.7.0",
-    "webpack": "^4.27.1",
-    "webpack-cli": "^3.1.2"
-  },
-  "dependencies": {}
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "alexa-app": "^4.2.3",
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "ssl-root-cas": "^1.2.5",
+    "ssml-builder": "^0.4.3"
+  }
 }

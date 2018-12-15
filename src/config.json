@@ -1,0 +1,5 @@
+{
+  "balenaApiUrl": "https://tobias-blaufuss.de:63642/api/balena/sandbox-test",
+  "deviceApiUrl": "balena-devices.com/api",
+  "webApiUrl": "https://tobias-blaufuss.de:65291/api"
+}
