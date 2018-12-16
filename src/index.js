@@ -38,21 +38,20 @@ alexaApp.launch(async function (request, response) {
 
   await makeCoffee()
     .then(() => {
-      response.say('Your coffee will be ready soon');
-      response.shouldEndSession(true);
+      response.say('Sure, your coffee will be ready soon');
     })
     .catch( error => {
       console.error(error);
       response.say('There was a problem ordering your coffee, please try again later');
-      response.shouldEndSession(true);
     });
 
   let speech = new Speech();
 
   response.say(speech.ssml(true)).reprompt('I messed up, can you repeat what you said please?');
-  response.shouldEndSession(false);
+  response.shouldEndSession(true);
 });
 
+// this is probably not necessary
 alexaApp.intent('MakeCoffeeIntent', {
     'slots': { },
     'utterances': [
@@ -73,6 +72,23 @@ alexaApp.intent('MakeCoffeeIntent', {
       });
 
     response.shouldEndSession(true);
+  }
+);
+
+alexaApp.intent("AMAZON.NoIntent", {
+    "slots": {},
+    "utterances": []
+  }, function (request, response) {
+    response.shouldEndSession(true);
+    response.say("Ok, dann bis später, ich freue mich auf dich!");
+  }
+);
+
+alexaApp.intent("AMAZON.StopIntent", {
+    "slots": {},
+    "utterances": ["stop"]
+  }, function (request, response) {
+    response.say("Okay");
   }
 );
 
