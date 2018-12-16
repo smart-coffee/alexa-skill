@@ -35,19 +35,19 @@ alexaApp.launch(async function (request, response) {
   console.log('Launched!');
   let session = request.getSession();
   session.set("status", "start");
-  let speech = new Speech()
-    .say('Sure')
-    .pause('100ms')
-    .say('Just give me a second');
 
   await makeCoffee()
     .then(() => {
       response.say('Your coffee will be ready soon');
+      response.shouldEndSession(true);
     })
     .catch( error => {
       console.error(error);
       response.say('There was a problem ordering your coffee, please try again later');
+      response.shouldEndSession(true);
     });
+
+  let speech = new Speech();
 
   response.say(speech.ssml(true)).reprompt('I messed up, can you repeat what you said please?');
   response.shouldEndSession(false);
