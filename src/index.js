@@ -43,7 +43,12 @@ alexaApp.launch(function (request, response) {
 
 alexaApp.intent('MakeCoffeeIntent', {
     'slots': { },
-    'utterances': ['make me my favourite coffee']
+    'utterances': [
+      'make me a smart coffee',
+      'make me my favourite coffee',
+      'make me my after lunch coffee',
+      'make me my morning coffee'
+    ]
   },
   async function(request, response) {
     response.shouldEndSession(true);
