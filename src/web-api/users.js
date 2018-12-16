@@ -5,7 +5,7 @@ const url = config.webApiUrl;
 
 const getJwtToken = async credentials => {
   try {
-    const response = await axios.post(`${url}/public/auth/login`, credentials, { httpsAgent });
+    const response = await axios.post(`${url}/public/auth/login`, credentials);
     const data = response.data;
     if (data)
       return data.token;
