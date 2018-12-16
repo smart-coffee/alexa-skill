@@ -35,12 +35,7 @@ alexaApp.launch(function (request, response) {
   console.log('Launched!');
   let session = request.getSession();
   session.set("status", "start");
-
-  let speech = new Speech()
-    .say('Sure')
-    .pause('100ms')
-    .say('Just give me a second');
-
+  let speech = new Speech();
 
   response.say(speech.ssml(true)).reprompt('I messed up, can you repeat what you said please?');
   response.shouldEndSession(false);
@@ -48,20 +43,22 @@ alexaApp.launch(function (request, response) {
 
 alexaApp.intent('MakeCoffeeIntent', {
     'slots': { },
-    'utterances': ['make me a smart coffee']
+    'utterances': ['make me my favourite coffee']
   },
   async function(request, response) {
-    response.shouldEndSession(false);
+    response.shouldEndSession(true);
+    let speech = new Speech()
+      .say('Sure')
+      .pause('100ms')
+      .say('Just give me a second');
+
     await makeCoffee()
       .then(() => {
         response.say('Your coffee will be ready soon');
       })
       .catch( error => {
         console.error(error);
-        let speech = new Speech()
-          .say('Sadly something went wrong')
-          .pause('200ms')
-          .say('Please try again later');
+        response.say('There was a problem ordering your coffee, please try again later');
       });
   }
 );
@@ -79,14 +76,5 @@ const makeCoffee = async () => {
 
   console.log(jobConfirmation);
 };
-
-/*
-makeCoffee()
-  .then(() => {
-    console.log('done');
-  })
-  .catch( error => {
-    console.error(error);
-  });*/
 
 app.listen(PORT, () => console.log("Listening on port " + PORT + "."));
