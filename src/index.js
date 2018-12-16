@@ -46,17 +46,15 @@ alexaApp.launch(function (request, response) {
   response.shouldEndSession(false);
 });
 
-alexaApp.intent("MakeCoffeeIntent", {
-    "slots": { },
-    "utterances": [
-      "make me a smart coffee", "make me a coffee"
-    ]
+alexaApp.intent('MakeCoffeeIntent', {
+    'slots': { },
+    'utterances': ['make me a smart coffee']
   },
   async function(request, response) {
+    response.shouldEndSession(false);
     await makeCoffee()
       .then(() => {
-        let speech = new Speech()
-          .say('Your coffee will be ready soon');
+        response.say('Your coffee will be ready soon');
       })
       .catch( error => {
         console.error(error);
