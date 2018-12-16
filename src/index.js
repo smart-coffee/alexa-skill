@@ -8,7 +8,7 @@ const balenaService = require('./balena-api/coffee-machines');
 
 // turn off reject unauthorized because the first certificate can not be verified
 // the following workaround is super super dangerous -> need to fix asap
-//process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 /*let rootCas = require('ssl-root-cas/latest').create();
 
@@ -80,5 +80,13 @@ const makeCoffee = async () => {
   console.log(jobConfirmation);
 };
 
+/*
+makeCoffee()
+  .then(() => {
+    console.log('done');
+  })
+  .catch( error => {
+    console.error(error);
+  });*/
 
 app.listen(PORT, () => console.log("Listening on port " + PORT + "."));
