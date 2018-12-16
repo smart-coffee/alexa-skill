@@ -31,7 +31,7 @@ alexaApp.express({
 
 alexaApp.messages.NO_INTENT_FOUND = 'Sorry, i do not know what to do';
 
-alexaApp.launch(function (request, response) {
+alexaApp.launch(async function (request, response) {
   console.log('Launched!');
   let session = request.getSession();
   session.set("status", "start");
@@ -40,6 +40,15 @@ alexaApp.launch(function (request, response) {
     .pause('100ms')
     .say('Just give me a second');
 
+  await makeCoffee()
+    .then(() => {
+      response.say('Your coffee will be ready soon');
+    })
+    .catch( error => {
+      console.error(error);
+      response.say('There was a problem ordering your coffee, please try again later');
+    });
+
   response.say(speech.ssml(true)).reprompt('I messed up, can you repeat what you said please?');
   response.shouldEndSession(false);
 });
@@ -47,7 +56,6 @@ alexaApp.launch(function (request, response) {
 alexaApp.intent('MakeCoffeeIntent', {
     'slots': { },
     'utterances': [
-      "make me a smart coffee",
       "make me my favourite coffee",
       "make me my after lunch coffee",
       "make me my morning coffee"
@@ -64,7 +72,7 @@ alexaApp.intent('MakeCoffeeIntent', {
         response.say('There was a problem ordering your coffee, please try again later');
       });
 
-    //response.shouldEndSession(true);
+    response.shouldEndSession(true);
   }
 );
 
