@@ -51,7 +51,6 @@ alexaApp.intent('MakeCoffeeIntent', {
     ]
   },
   async function(request, response) {
-    response.shouldEndSession(true);
     let speech = new Speech()
       .say('Sure')
       .pause('100ms')
@@ -60,10 +59,12 @@ alexaApp.intent('MakeCoffeeIntent', {
     await makeCoffee()
       .then(() => {
         response.say('Your coffee will be ready soon');
+        response.shouldEndSession(true);
       })
       .catch( error => {
         console.error(error);
         response.say('There was a problem ordering your coffee, please try again later');
+        response.shouldEndSession(true);
       });
   }
 );
