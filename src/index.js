@@ -64,7 +64,7 @@ alexaApp.intent('MakeCoffeeIntent', {
         response.say('There was a problem ordering your coffee, please try again later');
       });
 
-    response.shouldEndSession(true);
+    //response.shouldEndSession(true);
   }
 );
 
