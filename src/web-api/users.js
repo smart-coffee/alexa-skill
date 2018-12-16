@@ -1,11 +1,11 @@
-const axios = require("axios");
-const config = require("../config");
+const axios = require('axios');
+const config = require('../config');
 
 const url = config.webApiUrl;
 
 const getJwtToken = async credentials => {
   try {
-    const response = await axios.post(`${url}/public/auth/login`, credentials);
+    const response = await axios.post(`${url}/public/auth/login`, credentials, { httpsAgent });
     const data = response.data;
     if (data)
       return data.token;

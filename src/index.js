@@ -1,5 +1,5 @@
-const express = require("express");
-const alexa = require("alexa-app");
+const express = require('express');
+const alexa = require('alexa-app');
 const Speech = require('ssml-builder');
 
 const userService = require('./web-api/users');
@@ -9,12 +9,6 @@ const balenaService = require('./balena-api/coffee-machines');
 // turn off reject unauthorized because the first certificate can not be verified
 // the following workaround is super super dangerous -> need to fix asap
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-//process.env.NODE_EXTRA_CA_CERTS = './ssl/cert.pem';
-
-console.log(process.env.NODE_EXTRA_CA_CERTS);
-/*let rootCas = require('ssl-root-cas/latest').create();
-
-require('https').globalAgent.options.ca = rootCas;*/
 
 let PORT = process.env.PORT || 8080;
 let app = express();
@@ -39,7 +33,7 @@ alexaApp.messages.NO_INTENT_FOUND = 'Sorry, i do not know what to do';
 alexaApp.launch(async function (request, response) {
   console.log('Launched!');
   let session = request.getSession();
-  session.set("status", "start");
+  session.set('status', 'start');
 
   await makeCoffee()
     .then(() => {
@@ -60,9 +54,9 @@ alexaApp.launch(async function (request, response) {
 alexaApp.intent('MakeCoffeeIntent', {
     'slots': { },
     'utterances': [
-      "make me my favourite coffee",
-      "make me my after lunch coffee",
-      "make me my morning coffee"
+      'make me my favourite coffee',
+      'make me my after lunch coffee',
+      'make me my morning coffee'
     ]
   },
   async function(request, response) {
@@ -80,20 +74,20 @@ alexaApp.intent('MakeCoffeeIntent', {
   }
 );
 
-alexaApp.intent("AMAZON.NoIntent", {
-    "slots": {},
-    "utterances": []
+alexaApp.intent('AMAZON.NoIntent', {
+    'slots': {},
+    'utterances': []
   }, function (request, response) {
     response.shouldEndSession(true);
-    response.say("Ok, dann bis später, ich freue mich auf dich!");
+    response.say('Ok, dann bis später, ich freue mich auf dich!');
   }
 );
 
-alexaApp.intent("AMAZON.StopIntent", {
-    "slots": {},
-    "utterances": ["stop"]
+alexaApp.intent('AMAZON.StopIntent', {
+    'slots': {},
+    'utterances': ['stop']
   }, function (request, response) {
-    response.say("Okay");
+    response.say('Okay');
   }
 );
 
@@ -102,7 +96,6 @@ const makeCoffee = async () => {
 
   let customHeaders = {'x-access-token': ''};
   customHeaders['x-access-token'] = await userService.getJwtToken({username: userName, password: userPassword});
-  console.log(customHeaders["x-access-token"]);
   const machineUIID = await balenaService.getCoffeeMachineUUID(customHeaders);
   // set the job variables here, if needed
   const jobDetails = {coffee_strength_in_percent: 75, water_in_percent: 15, doses: 1};
@@ -111,13 +104,4 @@ const makeCoffee = async () => {
   console.log(jobConfirmation);
 };
 
-/*
-makeCoffee()
-  .then(() => {
-    console.log('done making coffee')
-  })
-  .catch( error => {
-    console.error(error);
-  });*/
-
-app.listen(PORT, () => console.log("Listening on port " + PORT + "."));
+app.listen(PORT, () => console.log('Listening on port ' + PORT + '.'));
