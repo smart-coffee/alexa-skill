@@ -41,21 +41,32 @@ alexaApp.launch(function (request, response) {
     .pause('100ms')
     .say('Just give me a second');
 
-  makeCoffee()
-    .then(() => {
-      speech.say('Your coffee will be ready soon');
-    })
-    .catch( error => {
-      console.error(error);
-      speech.say('Sadly something went wrong')
-        .pause('200ms')
-        .say('Please try again later');
-    });
 
-
-  response.say(speech.ssml(true)).reprompt('Ich war grade abgelenkt, kannst du das bitte nochmal sagen?');
+  response.say(speech.ssml(true)).reprompt('I messed up, can you repeat what you said please?');
   response.shouldEndSession(false);
 });
+
+alexaApp.intent("MakeCoffeeIntent", {
+    "slots": { },
+    "utterances": [
+      "make me a smart coffee", "make me a coffee"
+    ]
+  },
+  async function(request, response) {
+    await makeCoffee()
+      .then(() => {
+        let speech = new Speech()
+          .say('Your coffee will be ready soon');
+      })
+      .catch( error => {
+        console.error(error);
+        let speech = new Speech()
+          .say('Sadly something went wrong')
+          .pause('200ms')
+          .say('Please try again later');
+      });
+  }
+);
 
 
 const makeCoffee = async () => {
