@@ -9,16 +9,21 @@ const balenaService = require('./balena-api/coffee-machines');
 // turn off reject unauthorized because the first certificate can not be verified
 // the following workaround is super super dangerous -> need to fix asap
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+//process.env.NODE_EXTRA_CA_CERTS = './ssl/cert.pem';
 
+console.log(process.env.NODE_EXTRA_CA_CERTS);
 /*let rootCas = require('ssl-root-cas/latest').create();
 
 require('https').globalAgent.options.ca = rootCas;*/
-
 
 let PORT = process.env.PORT || 8080;
 let app = express();
 
 let alexaApp = new alexa.app('smartc');
+
+const userName = process.env.USER_NAME;
+const userPassword = process.env.USER_PASSWORD;
+
 
 const debug = process.env.NODE_ENV !== 'production';
 const checkCerts = process.env.NODE_ENV === 'production';
@@ -96,7 +101,7 @@ alexaApp.intent("AMAZON.StopIntent", {
 const makeCoffee = async () => {
 
   let customHeaders = {'x-access-token': ''};
-  customHeaders['x-access-token'] = await userService.getJwtToken({username: 'admin', password: 'password'});
+  customHeaders['x-access-token'] = await userService.getJwtToken({username: userName, password: userPassword});
   console.log(customHeaders["x-access-token"]);
   const machineUIID = await balenaService.getCoffeeMachineUUID(customHeaders);
   // set the job variables here, if needed
@@ -105,5 +110,14 @@ const makeCoffee = async () => {
 
   console.log(jobConfirmation);
 };
+
+/*
+makeCoffee()
+  .then(() => {
+    console.log('done making coffee')
+  })
+  .catch( error => {
+    console.error(error);
+  });*/
 
 app.listen(PORT, () => console.log("Listening on port " + PORT + "."));
