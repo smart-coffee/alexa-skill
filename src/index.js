@@ -6,9 +6,17 @@ const userService = require('./web-api/users');
 const deviceService = require('./device-api/devices');
 const balenaService = require('./balena-api/coffee-machines');
 
-// turn off reject unauthorized because the first certificate can not be verified
-// the following workaround is super super dangerous -> need to fix asap
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+const rootCas = require('ssl-root-cas/latest').create();
+rootCas
+  .addFile(__dirname + '/ssl/isrgrootx1.pem')
+  .addFile(__dirname + '/ssl/letsencryptauthorityx1.pem')
+  .addFile(__dirname + '/ssl/letsencryptauthorityx2.pem')
+  .addFile(__dirname + '/ssl/lets-encrypt-x1-cross-signed.pem')
+  .addFile(__dirname + '/ssl/lets-encrypt-x2-cross-signed.pem')
+  .addFile(__dirname + '/ssl/lets-encrypt-x3-cross-signed.pem')
+  .addFile(__dirname + '/ssl/lets-encrypt-x4-cross-signed.pem')
+;
+require('https').globalAgent.options.ca = rootCas;
 
 let PORT = process.env.PORT || 8080;
 let app = express();
@@ -90,7 +98,6 @@ alexaApp.intent('AMAZON.StopIntent', {
     response.say('Okay');
   }
 );
-
 
 const makeCoffee = async () => {
 

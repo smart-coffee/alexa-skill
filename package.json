@@ -18,6 +18,7 @@
     "alexa-app": "^4.2.3",
     "axios": "^0.18.0",
     "express": "^4.16.4",
+    "ssl-root-cas": "^1.2.5",
     "ssml-builder": "^0.4.3"
   }
 }
