@@ -87,7 +87,7 @@ alexaApp.intent('AMAZON.NoIntent', {
     'utterances': []
   }, function (request, response) {
     response.shouldEndSession(true);
-    response.say('Ok, dann bis später, ich freue mich auf dich!');
+    response.say('Okay');
   }
 );
 
@@ -95,7 +95,7 @@ alexaApp.intent('AMAZON.StopIntent', {
     'slots': {},
     'utterances': ['stop']
   }, function (request, response) {
-    response.say('Okay');
+    response.say('Okay, bye');
   }
 );
 
