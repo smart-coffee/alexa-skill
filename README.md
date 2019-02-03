@@ -15,4 +15,4 @@ To use the alexa skill please do the following:
 3. take your delicious smart coffee
 
 ## Contribution
-To contribute please open merge requests, any help is welcome.
+To contribute please open merge requests - any help is welcome.
