@@ -12,7 +12,7 @@ This is the alexa skill for the smart coffee platform ... make your coffee the c
 To use the alexa skill please do the following:
 1. wake the alexa device and call the smart coffee skill with: __"Alexa, make me a smart coffee"__
 2. wait for a response
-3. take your delicios coffee
+3. take your delicious smart coffee
 
 ## Contribution
 To contribute please open merge requests, any help is welcome.
