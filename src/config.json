@@ -1,5 +1,5 @@
 {
-  "balenaApiUrl": "https://contabo.tobias-blaufuss.de:60001/api/balena/smart-coffee",
+  "balenaApiUrl": "https://balena.contabo.tobias-blaufuss.de/api/smart-coffee",
   "deviceApiUrl": "balena-devices.com/api",
-  "webApiUrl": "https://contabo.tobias-blaufuss.de:60000/api"
+  "webApiUrl": "https://contabo.tobias-blaufuss.de:60001/api"
 }
